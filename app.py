@@ -1,36 +1,11 @@
-from flask import Flask, request, make_response
+from flask import Flask, request, make_response, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 @app.route('/')
 def index():
-    return "<h1>Hello World</h1>"
-
-@app.route('/hello', methods= ['GET', 'POST'])
-def hello():
-    response = make_response('Hello World\n')
-    response.status_code = 202
-    response.headers['content-type'] = 'application/octet-stream'
-
-    return 'HEllo World\n'
-
-@app.route('/greet/<name>')
-def greet(name):
-    return f"Hello {name}"
-
-@app.route('/add/<int:number1>/<int:number2>')
-def add(number1, number2):
-    number1 = int(number1)
-    return f"{number1} + {number2} = {number1 + number2}"
-
-@app.route('/handle_url_params')
-def handle_params():
-    if 'greeting' in request.args.keys() and 'name' in request.args.keys():
-        greeting = request.args['greeting']
-        name = request.args.get('name')
-        return f"{greeting}, {name}"
-    else:
-        return "Some parameters are missing"
+    myList = [10,20,30,40,50]
+    return render_template('index.html', myList=myList  )
 
 
 
